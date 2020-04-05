@@ -4,6 +4,7 @@ const exphbs  = require('express-handlebars');
 const homeRouter = require('./routes/home')
 const coursesRouter = require('./routes/courses')
 const addRouter = require('./routes/add')
+const cardRouter = require('./routes/card')
 
 
 const app = express();
@@ -22,6 +23,8 @@ app.use(express.urlencoded({extended:true}))
 app.use('/', homeRouter)
 app.use('/courses', coursesRouter)
 app.use('/add', addRouter)
+app.use('/card', cardRouter)
+
 
 const PORT = process.env.PORT || 3000
 
