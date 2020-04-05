@@ -19,10 +19,25 @@ class Course{
         }
     }
     async save() {
-        const course = await Course.getAll();
-        course.push(this.toJSON())
+        const courses = await Course.getAll();
+        courses.push(this.toJSON())
         return new Promise((res, rej) => {
-            fs.writeFile(path.join(__dirname, '..', 'data', 'courses.json'), JSON.stringify(course), (err) => {
+            fs.writeFile(path.join(__dirname, '..', 'data', 'courses.json'), JSON.stringify(courses), (err) => {
+                if(err) {
+                   rej(err)
+                } else(
+                    res()
+                )
+            })
+        })
+    }
+
+    static async update(course) {
+        const courses = await Course.getAll();
+        const idx = courses.findIndex( c => c.id === course.id);
+        courses[idx] = course
+        return new Promise((res, rej) => {
+            fs.writeFile(path.join(__dirname, '..', 'data', 'courses.json'), JSON.stringify(courses), (err) => {
                 if(err) {
                    rej(err)
                 } else(
@@ -42,6 +57,11 @@ class Course{
                 }
             })
         })
+    }
+
+    static async getById(id) {
+        const courses = await Course.getAll()
+        return courses.find(c => c.id === id)
     }
 }
 
